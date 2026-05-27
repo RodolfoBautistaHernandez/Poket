@@ -1,6 +1,7 @@
 package com.mifel.poke.controller;
 
 import com.mifel.poke.service.PokeService;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,6 +14,7 @@ public class PokeController {
         this.pokeService = pokeService;
     }
 
+    @GetMapping("/ditto")
     public Object getDtto(){
         return pokeService.getDitto();
     }
