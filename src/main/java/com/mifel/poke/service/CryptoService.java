@@ -1,5 +1,6 @@
 package com.mifel.poke.service;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.Cipher;
@@ -11,13 +12,15 @@ import java.util.Base64;
 public class CryptoService {
 
 
-    private static final String SECRET_KEY = "mifelSecretKey16";
+    @Value("${crypto.secret.key}")
+    private static String secretKey = "mifelSecretKey16";
 
-    private static final String INIT_VECTOR = "mifelInitVector1";
+    @Value("${crypto.init.vector}")
+    private static String initVector = "mifelInitVector1";
 
     public String encrypt(String text) throws Exception {
-        IvParameterSpec iv = new IvParameterSpec(INIT_VECTOR.getBytes("UTF-8"));
-        SecretKeySpec key = new SecretKeySpec(SECRET_KEY.getBytes("UTF-8"), "AES");
+        IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
+        SecretKeySpec key = new SecretKeySpec(secretKey.getBytes("UTF-8"), "AES");
 
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
         cipher.init(Cipher.ENCRYPT_MODE, key, iv);
@@ -27,8 +30,8 @@ public class CryptoService {
     }
 
     public String decrypt(String encryptedText) throws Exception {
-        IvParameterSpec iv = new IvParameterSpec(INIT_VECTOR.getBytes("UTF-8"));
-        SecretKeySpec key = new SecretKeySpec(SECRET_KEY.getBytes("UTF-8"), "AES");
+        IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
+        SecretKeySpec key = new SecretKeySpec(secretKey.getBytes("UTF-8"), "AES");
 
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
         cipher.init(Cipher.DECRYPT_MODE, key, iv);

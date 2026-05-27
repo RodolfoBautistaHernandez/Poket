@@ -5,6 +5,7 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
@@ -13,7 +14,10 @@ import java.util.Date;
 @Service
 public class JwtService {
 
+    @Value("${jwt.secret}")
     private static final String SECRET = "mifel-secret-key-super-segura-2024-poke";
+
+    @Value("${jwt.expiration}")
     private static final long EXPIRATION = 1000 * 60 * 60;
 
     private Key secretKey(){
